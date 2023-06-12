@@ -5,6 +5,8 @@ VisualStudioVersion = 17.6.33723.286
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PickemWebAPI", "PickemWebAPI\PickemWebAPI.csproj", "{89888099-232F-428A-AE5C-FB9C3E565223}"
 EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "PickemDB", "PickemDB\PickemDB.sqlproj", "{132F0EBF-8027-4AC0-8AA8-EB651FE741CA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,12 @@ Global
 		{89888099-232F-428A-AE5C-FB9C3E565223}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89888099-232F-428A-AE5C-FB9C3E565223}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89888099-232F-428A-AE5C-FB9C3E565223}.Release|Any CPU.Build.0 = Release|Any CPU
+		{132F0EBF-8027-4AC0-8AA8-EB651FE741CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{132F0EBF-8027-4AC0-8AA8-EB651FE741CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{132F0EBF-8027-4AC0-8AA8-EB651FE741CA}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{132F0EBF-8027-4AC0-8AA8-EB651FE741CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{132F0EBF-8027-4AC0-8AA8-EB651FE741CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{132F0EBF-8027-4AC0-8AA8-EB651FE741CA}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
