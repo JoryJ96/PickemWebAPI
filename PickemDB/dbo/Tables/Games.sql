@@ -4,5 +4,6 @@
     [Week] INT NOT NULL, 
     [Home] NCHAR(10) NOT NULL, 
     [Away] NCHAR(10) NOT NULL, 
-    [Spread] REAL NOT NULL 
+    [Spread] REAL NOT NULL, 
+    [TimeSlot] DATETIME2 NOT NULL 
 )
