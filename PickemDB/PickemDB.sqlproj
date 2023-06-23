@@ -65,4 +65,12 @@
   <ItemGroup>
     <None Include="PublishLocations\PickemDB.publish.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <Build Include="dbo\Tables\Users.sql" />
+    <Build Include="dbo\Tables\Results.sql" />
+    <Build Include="dbo\Tables\Games.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="PickemDB.refactorlog" />
+  </ItemGroup>
 </Project>

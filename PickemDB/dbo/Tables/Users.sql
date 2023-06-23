@@ -1,0 +1,8 @@
+﻿CREATE TABLE [dbo].[Users]
+(
+	[Id] INT NOT NULL PRIMARY KEY, 
+    [Name] NVARCHAR(MAX) NOT NULL, 
+    [Wins] INT NOT NULL DEFAULT 0, 
+    [Losses] INT NOT NULL DEFAULT 0, 
+    [Rank] INT NOT NULL
+)

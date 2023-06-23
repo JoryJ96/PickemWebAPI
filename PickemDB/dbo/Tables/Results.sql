@@ -1,0 +1,14 @@
+﻿CREATE TABLE [dbo].[Results]
+(
+	[Id] INT NOT NULL PRIMARY KEY, 
+    [UserID] INT NOT NULL, 
+    [MNF] NVARCHAR(25) NULL, 
+    [SNF] NVARCHAR(25) NULL, 
+    [TNF/OPT] NVARCHAR(25) NULL, 
+    [DAL/OPT] NVARCHAR(25) NULL, 
+    [OPT] NVARCHAR(25) NULL, 
+    [Week] INT NOT NULL, 
+    [TotalWins] INT NOT NULL DEFAULT 0, 
+    [TotalLosses] INT NOT NULL DEFAULT 0, 
+    [Triple] NVARCHAR(25) NULL
+)
