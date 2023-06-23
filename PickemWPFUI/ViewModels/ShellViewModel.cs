@@ -9,5 +9,12 @@ namespace PickemWPFUI.ViewModels
 {
     public class ShellViewModel : Conductor<object>
     {
+        LoginViewModel _LoginVM;
+
+        private ShellViewModel(LoginViewModel loginVM)
+        {
+            _LoginVM = loginVM;
+            ActivateItem(_LoginVM);
+        }
     }
 }
