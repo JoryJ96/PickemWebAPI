@@ -37,7 +37,7 @@ namespace PickemWPFUI
 
         protected override void OnStartup(object sender, StartupEventArgs e)
         {
-            DisplayRootViewForAsync<ShellViewModel>();
+            DisplayRootViewFor<ShellViewModel>();
         }
 
         // Boilerplate code for SimpleContainer implementation

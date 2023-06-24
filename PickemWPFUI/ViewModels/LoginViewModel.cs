@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PickemWPFUI.ViewModels
 {
-    internal class LoginViewModel
+    public class LoginViewModel
     {
     }
 }
