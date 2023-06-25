@@ -28,19 +28,19 @@
         </TextBlock>
         
         <!-- Username -->
-        <TextBlock x:Name="Username" Grid.Row="1" Grid.Column="1" Margin="0 0 0 10">
+        <TextBlock Grid.Row="1" Grid.Column="1" Margin="0 0 0 10">
             Username:
         </TextBlock>
-        <TextBox Grid.Row="1" Grid.Column="2" MinWidth="150" Margin="0 0 0 10" />
+        <TextBox x:Name="Username" Grid.Row="1" Grid.Column="2" MinWidth="150" Margin="0 0 0 10" />
         
         <!-- Password -->
-        <TextBlock x:Name="Password" Grid.Row="2" Grid.Column="1" Margin="0 0 0 10">
+        <TextBlock Grid.Row="2" Grid.Column="1" Margin="0 0 0 10">
             Password:
         </TextBlock>
-        <PasswordBox Grid.Row="2" Grid.Column="2" MinWidth="150" Margin="0 0 0 10" />
+        <PasswordBox x:Name="Password" Grid.Row="2" Grid.Column="2" MinWidth="150" Margin="0 0 0 10" />
         
         <!-- Login button -->
-        <Button x:Name="Login" Padding="20 5" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"
+        <Button x:Name="LogIn" Padding="20 5" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"
                 HorizontalAlignment="Center">
             Log In
         </Button>
