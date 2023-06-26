@@ -12,6 +12,11 @@ namespace PickemWPFUI.Helpers
     {
         private HttpClient apiClient { get; set; }
 
+        public APIHelper()
+        {
+            InitializeClient();
+        }
+
         private void InitializeClient()
         {
             string conn = ConfigurationManager.AppSettings["connectionString"];

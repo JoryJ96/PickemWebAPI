@@ -31,7 +31,8 @@ namespace PickemWPFUI
 
             _container
                 .Singleton<IWindowManager, WindowManager>()
-                .Singleton<IEventAggregator, EventAggregator>();
+                .Singleton<IEventAggregator, EventAggregator>()
+                .Singleton<IAPIHelper, APIHelper>();
 
             // Small performance hit on start up due to it grabbing ALL ViewModels and adding them to the _container instance
             GetType().Assembly.GetTypes()

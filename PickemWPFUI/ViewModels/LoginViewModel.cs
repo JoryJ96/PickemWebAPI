@@ -7,13 +7,20 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows;
+using PickemWPFUI.Helpers;
 
 namespace PickemWPFUI.ViewModels
 {
     public class LoginViewModel : Screen
     {
 		private string _userName;
-        private string _password;	
+		private string _password;
+		private IAPIHelper _apiHelper;
+
+        public LoginViewModel(IAPIHelper apiHelper)
+        {
+			_apiHelper = apiHelper;
+        }
 
         public string Username
 		{
@@ -36,6 +43,7 @@ namespace PickemWPFUI.ViewModels
 			}
 		}
 
+		// This is how the View determines if Log In can be pressed
 		public bool CanLogIn
 		{
 			get
@@ -51,9 +59,9 @@ namespace PickemWPFUI.ViewModels
             }
 		}
 
-		public void LogIn(string userName, string password)
+		public async Task LogIn()
 		{
-			Console.WriteLine("You logged in!");
+			var result = await _apiHelper.Authenticate(Username, Password);
 		}
 	}
 }
