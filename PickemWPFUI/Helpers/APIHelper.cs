@@ -4,24 +4,25 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System;
 using System.Configuration;
+using PickemWPFUI.Models;
 
 namespace PickemWPFUI.Helpers
 {
-    public class APIHelper
+    public class APIHelper : IAPIHelper
     {
-        public HttpClient ApiClient { get; set; }
+        private HttpClient apiClient { get; set; }
 
         private void InitializeClient()
         {
             string conn = ConfigurationManager.AppSettings["connectionString"];
 
-            ApiClient = new HttpClient();
-            ApiClient.BaseAddress = new Uri(conn);
-            ApiClient.DefaultRequestHeaders.Accept.Clear();
-            ApiClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            apiClient = new HttpClient();
+            apiClient.BaseAddress = new Uri(conn);
+            apiClient.DefaultRequestHeaders.Accept.Clear();
+            apiClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        public async Task Authenticate(string username, string password)
+        public async Task<AuthenticatedUser> Authenticate(string username, string password)
         {
             var data = new FormUrlEncodedContent(new[]
             {
@@ -30,9 +31,17 @@ namespace PickemWPFUI.Helpers
                 new KeyValuePair<string, string>("password", password)
             });
 
-            using (HttpResponseMessage response = await ApiClient.PostAsync("/Token", data))
+            using (HttpResponseMessage response = await apiClient.PostAsync("/Token", data))
             {
-
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = await response.Content.ReadAsAsync<AuthenticatedUser>();
+                    return result;
+                }
+                else
+                {
+                    throw new Exception(response.ReasonPhrase);
+                }
             }
         }
     }
