@@ -11,7 +11,8 @@ namespace PickemWebAPI.App_Start
     {
         public void Apply(Operation operation, SchemaRegistry schemaRegistry, ApiDescription apiDescription)
         {
-            if (operation == null)
+            // Was checking if operation was null, not operation.parameters
+            if (operation.parameters == null)
             {
                 operation.parameters = new List<Parameter>();
             }
