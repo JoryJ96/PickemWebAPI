@@ -43,6 +43,36 @@ namespace PickemWPFUI.ViewModels
 			}
 		}
 
+		// ERROR MESSAGE HANDLING
+		public bool IsErrorVisible
+		{
+			get {
+				bool output = false;
+
+				if (ErrorMessage?.Length > 0)
+				{
+					output = true;
+				}
+
+				return output;
+			}
+		}
+
+		private string _errorMessage;
+
+		public string ErrorMessage
+		{
+			get { return _errorMessage; }
+			set { 
+				_errorMessage = value;
+				NotifyOfPropertyChange(() => ErrorMessage);
+				NotifyOfPropertyChange(() => IsErrorVisible);
+			}
+		}
+
+
+
+		// LOGIN HANDLING
 		// This is how the View determines if Log In can be pressed
 		public bool CanLogIn
 		{
@@ -61,7 +91,16 @@ namespace PickemWPFUI.ViewModels
 
 		public async Task LogIn()
 		{
-			var result = await _apiHelper.Authenticate(Username, Password);
+			try
+			{
+				var result = await _apiHelper.Authenticate(Username, Password);
+				ErrorMessage = "";
+			}
+			catch (Exception ex)
+			{
+
+				ErrorMessage = ex.Message;
+			}
 		}
 	}
 }

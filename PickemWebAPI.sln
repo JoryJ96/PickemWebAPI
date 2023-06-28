@@ -9,6 +9,8 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "PickemDB", "PickemDB\Pickem
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PickemWPFUI", "PickemWPFUI\PickemWPFUI.csproj", "{ABE562D0-6D98-45AA-B875-DDE28A6A0CDA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PickemWebAPI.Library", "PickemWebAPI.Library\PickemWebAPI.Library.csproj", "{4607970A-E10D-4DF4-BC8A-2359B685DC17}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{ABE562D0-6D98-45AA-B875-DDE28A6A0CDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ABE562D0-6D98-45AA-B875-DDE28A6A0CDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ABE562D0-6D98-45AA-B875-DDE28A6A0CDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4607970A-E10D-4DF4-BC8A-2359B685DC17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4607970A-E10D-4DF4-BC8A-2359B685DC17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4607970A-E10D-4DF4-BC8A-2359B685DC17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4607970A-E10D-4DF4-BC8A-2359B685DC17}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
