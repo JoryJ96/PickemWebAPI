@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PickemWPFUI", "PickemWPFUI\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PickemWebAPI.Library", "PickemWebAPI.Library\PickemWebAPI.Library.csproj", "{4607970A-E10D-4DF4-BC8A-2359B685DC17}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PickemWPFUI.Library", "PickemWPFUI.Library\PickemWPFUI.Library.csproj", "{308384BE-E597-4DAC-BB01-FA1760811759}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{4607970A-E10D-4DF4-BC8A-2359B685DC17}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4607970A-E10D-4DF4-BC8A-2359B685DC17}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4607970A-E10D-4DF4-BC8A-2359B685DC17}.Release|Any CPU.Build.0 = Release|Any CPU
+		{308384BE-E597-4DAC-BB01-FA1760811759}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{308384BE-E597-4DAC-BB01-FA1760811759}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{308384BE-E597-4DAC-BB01-FA1760811759}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{308384BE-E597-4DAC-BB01-FA1760811759}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

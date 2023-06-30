@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using PickemWPFUI.Helpers;
+using PickemWPFUI.Library.Models;
 using PickemWPFUI.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -32,6 +33,7 @@ namespace PickemWPFUI
             _container
                 .Singleton<IWindowManager, WindowManager>()
                 .Singleton<IEventAggregator, EventAggregator>()
+                .Singleton<ILoggedInUserModel, LoggedInUserModel>()
                 .Singleton<IAPIHelper, APIHelper>();
 
             // Small performance hit on start up due to it grabbing ALL ViewModels and adding them to the _container instance
