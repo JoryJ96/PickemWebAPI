@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows;
 using PickemWPFUI.Helpers;
+using PickemWPFUI.EventModels;
 
 namespace PickemWPFUI.ViewModels
 {
@@ -15,11 +16,14 @@ namespace PickemWPFUI.ViewModels
     {
 		private string _userName;
 		private string _password;
-		private IAPIHelper _apiHelper;
 
-        public LoginViewModel(IAPIHelper apiHelper)
+		private IAPIHelper _apiHelper;
+		private IEventAggregator _events;
+
+        public LoginViewModel(IAPIHelper apiHelper, IEventAggregator events)
         {
 			_apiHelper = apiHelper;
+			_events = events;
         }
 
         public string Username
@@ -97,6 +101,8 @@ namespace PickemWPFUI.ViewModels
 				ErrorMessage = "";
 
 				await _apiHelper.GetLoggedInUserInfo(result.Access_token);
+
+				_events.PublishOnUIThread(new LogOnEvent());
 			}
 			catch (Exception ex)
 			{

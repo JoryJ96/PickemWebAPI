@@ -1,4 +1,6 @@
 ﻿using Caliburn.Micro;
+using PickemWPFUI.EventModels;
+using PickemWPFUI.Library.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,14 +9,28 @@ using System.Threading.Tasks;
 
 namespace PickemWPFUI.ViewModels
 {
-    public class ShellViewModel : Conductor<object>
+    public class ShellViewModel : Conductor<object>, IHandle<LogOnEvent>
     {
-        private LoginViewModel _LoginVM;
+        private GamesViewModel _GamesVM;
+        private SimpleContainer _container;
 
-        public ShellViewModel(LoginViewModel loginVM)
+        private IEventAggregator _events;
+
+        public ShellViewModel(IEventAggregator events, GamesViewModel gamesVM,
+            SimpleContainer container)
         {
-            _LoginVM = loginVM;
-            ActivateItem(_LoginVM);
+            _events = events;
+            _GamesVM = gamesVM;
+            _container = container;
+
+            _events.Subscribe(this);
+
+            ActivateItem(_container.GetInstance<LoginViewModel>());
+        }
+
+        public void Handle(LogOnEvent message)
+        {
+            ActivateItem(_GamesVM);
         }
     }
 }

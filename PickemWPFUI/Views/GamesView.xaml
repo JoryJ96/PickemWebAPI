@@ -32,8 +32,8 @@
         <!-- List of Games -->
         <StackPanel x:Name="GamesStackPanel" Grid.Row="1" Grid.Column="1">
             <DockPanel x:Name="Game1">
-                <Button Padding="5" Margin="5" MinWidth="100" Content="KC -7.0" Click="Clicked"/>
-                <Button Padding="5" Margin="5" MinWidth="100" Content="DET 7.0" Click="Clicked"/>
+                <Button Padding="5" Margin="5" MinWidth="100" Content="KC -7.0"/>
+                <Button Padding="5" Margin="5" MinWidth="100" Content="DET 7.0"/>
             </DockPanel>
 
             <DockPanel x:Name="Game2">
