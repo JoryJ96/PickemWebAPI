@@ -23,11 +23,17 @@ namespace PickemWPFUI.ViewModels
         {
             _apiClient = apiClient;
             _events = events;
+
+            InitializeList();
         }
 
         public StackPanel GamesStackPanel
         {
             get { return _gamesStackPanel; }
+            set {
+                _gamesStackPanel = value;
+                NotifyOfPropertyChange(() => GamesStackPanel);
+            }
         }
 
         // Automatically populate list of games using the games table
@@ -36,7 +42,7 @@ namespace PickemWPFUI.ViewModels
             // This list comes from a table that the admin populates manually
             List<Game> gamesToPopulate = new List<Game>();
 
-            foreach (var gameToPopulate in gamesToPopulate)
+            foreach (Game gameToPopulate in gamesToPopulate)
             {
                 string gameId = gameToPopulate.gameId;
 
