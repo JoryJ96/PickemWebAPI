@@ -1,9 +1,12 @@
 ﻿using Caliburn.Micro;
 using PickemWPFUI.Helpers;
+using PickemWPFUI.Library.Api;
+using PickemWPFUI.Library.Models;
 using PickemWPFUI.Models;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,31 +21,21 @@ namespace PickemWPFUI.ViewModels
 
         private IAPIHelper _apiClient;
         private IEventAggregator _events;
+        private IGameEndpoint _gameEndpoint;
 
-        public GamesViewModel(IEventAggregator events, IAPIHelper apiClient)
+        public GamesViewModel(IEventAggregator events, IAPIHelper apiClient, IGameEndpoint gameEndpoint)
         {
             _apiClient = apiClient;
             _events = events;
-
-            InitializeList();
+            _gameEndpoint = gameEndpoint;
         }
 
-        public StackPanel GamesStackPanel
+        private async Task LoadGames()
         {
-            get { return _gamesStackPanel; }
-            set {
-                _gamesStackPanel = value;
-                NotifyOfPropertyChange(() => GamesStackPanel);
-            }
-        }
+            var gameList = await _gameEndpoint.GetAll();
+            Games = new BindingList<Game>(gameList);
 
-        // Automatically populate list of games using the games table
-        public void InitializeList()
-        {
-            // This list comes from a table that the admin populates manually
-            List<Game> gamesToPopulate = new List<Game>();
-
-            foreach (Game gameToPopulate in gamesToPopulate)
+            foreach (Game gameToPopulate in _games)
             {
                 string gameId = gameToPopulate.gameId;
 
@@ -52,6 +45,33 @@ namespace PickemWPFUI.ViewModels
 
                 buttons[0].Content = $"{gameToPopulate.Home} {gameToPopulate.HomeSpread}";
                 buttons[1].Content = $"{gameToPopulate.Away} {gameToPopulate.AwaySpread}";
+            }
+        }
+
+        protected override async void OnViewLoaded(object view)
+        {
+            base.OnViewLoaded(view);
+            await LoadGames();
+        }
+
+        private BindingList<Game> _games;
+
+        public BindingList<Game> Games
+        {
+            get { return _games; }
+            set { 
+                _games = value;
+                NotifyOfPropertyChange(() => Games);
+            }
+        }
+
+
+        public StackPanel GamesStackPanel
+        {
+            get { return _gamesStackPanel; }
+            set {
+                _gamesStackPanel = value;
+                NotifyOfPropertyChange(() => GamesStackPanel);
             }
         }
 

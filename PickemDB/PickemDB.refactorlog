@@ -14,4 +14,18 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="GameID" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="2fe9f999-768e-4c8a-84ae-d0842cd009cb" ChangeDateTime="07/10/2023 02:02:59">
+    <Property Name="ElementName" Value="[dbo].[Games].[Spread]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Games]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="HomeSpread" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="865596f7-080f-44d3-b387-895ba4019c5b" ChangeDateTime="07/10/2023 02:03:02">
+    <Property Name="ElementName" Value="[dbo].[Games].[TimeSlot]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Games]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="AwaySpread" />
+  </Operation>
 </Operations>

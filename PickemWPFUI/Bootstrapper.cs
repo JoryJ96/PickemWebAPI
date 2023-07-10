@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using PickemWPFUI.Helpers;
+using PickemWPFUI.Library.Api;
 using PickemWPFUI.Library.Models;
 using PickemWPFUI.ViewModels;
 using System;
@@ -28,7 +29,8 @@ namespace PickemWPFUI
 
         protected override void Configure()
         {
-            _container.Instance(_container);
+            _container.Instance(_container)
+                .PerRequest<IGameEndpoint, GameEndpoint>();
 
             _container
                 .Singleton<IWindowManager, WindowManager>()
