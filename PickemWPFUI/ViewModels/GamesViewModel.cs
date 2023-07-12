@@ -6,8 +6,10 @@ using PickemWPFUI.Models;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -17,34 +19,57 @@ namespace PickemWPFUI.ViewModels
 {
     public class GamesViewModel : Screen
     {
-        private StackPanel _gamesStackPanel;
-
-        private IAPIHelper _apiClient;
-        private IEventAggregator _events;
         private IGameEndpoint _gameEndpoint;
 
-        public GamesViewModel(IEventAggregator events, IAPIHelper apiClient, IGameEndpoint gameEndpoint)
+        public GamesViewModel(IGameEndpoint gameEndpoint)
         {
-            _apiClient = apiClient;
-            _events = events;
             _gameEndpoint = gameEndpoint;
         }
 
         private async Task LoadGames()
         {
-            var gameList = await _gameEndpoint.GetAll();
-            Games = new BindingList<Game>(gameList);
+            Games = await _gameEndpoint.GetAll();
 
-            foreach (Game gameToPopulate in _games)
+            ObservableCollection<GameDisplay> loadedGames = new ObservableCollection<GameDisplay>();
+            foreach (Game game in Games)
             {
-                string gameId = gameToPopulate.gameId;
+                loadedGames.Add(new GameDisplay
+                {
+                    Home = $"{game.Home} {game.HomeSpread}",
+                    Away = $"{game.Away} {game.AwaySpread}"
+                });
+            }
 
-                DockPanel game = (DockPanel)_gamesStackPanel.FindName(gameId);
+            GamesDTO = loadedGames;
+        }
 
-                List<Button> buttons = game.Children.OfType<Button>().ToList();
+        private List<Button> GetButtons(Game game)
+        {
+            if (game != null)
+            {
+                List<Button> output = new List<Button>
+                {
+                    new Button
+                    {
+                        Content = $"{game.Home} {game.HomeSpread}",
+                        Padding = new Thickness(5),
+                        Margin = new Thickness(5),
+                        MinWidth = 100
+                    },
 
-                buttons[0].Content = $"{gameToPopulate.Home} {gameToPopulate.HomeSpread}";
-                buttons[1].Content = $"{gameToPopulate.Away} {gameToPopulate.AwaySpread}";
+                    new Button
+                    {
+                        Content = $"{game.Away} {game.AwaySpread}",
+                        Padding = new Thickness(5),
+                        Margin = new Thickness(5),
+                        MinWidth = 100
+                    }
+                };
+
+                return output;
+            } else
+            {
+                throw new Exception("Game not found, but I tried to make buttons anyway!");
             }
         }
 
@@ -54,9 +79,9 @@ namespace PickemWPFUI.ViewModels
             await LoadGames();
         }
 
-        private BindingList<Game> _games;
+        private List<Game> _games;
 
-        public BindingList<Game> Games
+        public List<Game> Games
         {
             get { return _games; }
             set { 
@@ -65,15 +90,17 @@ namespace PickemWPFUI.ViewModels
             }
         }
 
+        private ObservableCollection<GameDisplay> _gamesDTO;
 
-        public StackPanel GamesStackPanel
+        public ObservableCollection<GameDisplay> GamesDTO
         {
-            get { return _gamesStackPanel; }
-            set {
-                _gamesStackPanel = value;
-                NotifyOfPropertyChange(() => GamesStackPanel);
+            get { return _gamesDTO; }
+            set { 
+                _gamesDTO = value;
+                NotifyOfPropertyChange(() => GamesDTO);
             }
         }
+
 
         public void Clicked(object sender, EventArgs e)
         {
