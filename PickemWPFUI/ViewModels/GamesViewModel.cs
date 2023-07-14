@@ -20,10 +20,14 @@ namespace PickemWPFUI.ViewModels
     public class GamesViewModel : Screen
     {
         private IGameEndpoint _gameEndpoint;
+        private ILoggedInUserModel _loggedInUser;
 
-        public GamesViewModel(IGameEndpoint gameEndpoint)
+        private ObservableCollection<UserPick> _pickSet = new ObservableCollection<UserPick>();
+
+        public GamesViewModel(IGameEndpoint gameEndpoint, ILoggedInUserModel loggedInUser)
         {
             _gameEndpoint = gameEndpoint;
+            _loggedInUser = loggedInUser;
         }
 
         private async Task LoadGames()
@@ -40,6 +44,14 @@ namespace PickemWPFUI.ViewModels
         {
             base.OnViewLoaded(view);
             await LoadGames();
+
+            if (_loggedInUser.PickSet != null)
+            {
+                foreach (UserPick pick in _loggedInUser.PickSet)
+                {
+                    PickSet.Add(pick);
+                }
+            }
         }
 
         private List<Game> _games;
@@ -64,17 +76,65 @@ namespace PickemWPFUI.ViewModels
             }
         }
 
-
-        public void Clicked(object sender, EventArgs e)
+        public ObservableCollection<UserPick> PickSet
         {
-            Button btn = (Button)sender;
-            var btnContent = (System.Xml.XmlElement)btn.Content;
+            get { return _pickSet; }
+            set {  
+                _pickSet = value;
+                NotifyOfPropertyChange(() => PickSet);
+            }
+        }
 
-            string[] teamInfo = btnContent.InnerText.Split(' ');
 
+        public void HomeButtonClicked(Game game)
+        {
+            UserPick pick = new UserPick
+            {
+                GameID = game.gameId,
+                Team = game.Home,
+                Spread = game.HomeSpread,
+                TimeSlot = game.TimeSlot
+            };
 
-            // TODO: Process selection
-            // Store in a binding list?
+            if (game.IsHomeClicked)
+            {
+                game.IsHomeClicked = false;
+
+                PickSet.Remove(pick);
+                NotifyOfPropertyChange(() => PickSet);
+            } else
+            {
+                game.IsHomeClicked = true;
+
+                PickSet.Add(pick);
+                NotifyOfPropertyChange(() => PickSet);
+            }
+        }
+
+        public void AwayButtonClicked(Game game)
+        {
+            UserPick pick = new UserPick
+            {
+                GameID = game.gameId,
+                Team = game.Away,
+                Spread = game.AwaySpread,
+                TimeSlot = game.TimeSlot
+            };
+
+            if (game.IsAwayClicked)
+            {
+                game.IsAwayClicked = false;
+
+                PickSet.Remove(pick);
+                NotifyOfPropertyChange(() => PickSet);
+            }
+            else
+            {
+                game.IsAwayClicked = true;
+
+                PickSet.Add(pick);
+                NotifyOfPropertyChange(() => PickSet);
+            }
         }
 
         public void SubmitPicks(object sender, EventArgs e)

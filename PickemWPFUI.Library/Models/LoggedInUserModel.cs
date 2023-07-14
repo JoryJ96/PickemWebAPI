@@ -16,5 +16,7 @@ namespace PickemWPFUI.Library.Models
         public int Wins { get; set; }
         public int Losses { get; set; }
         public int Rank { get; set; }
+
+        public List<UserPick> PickSet { get; set; }
     }
 }

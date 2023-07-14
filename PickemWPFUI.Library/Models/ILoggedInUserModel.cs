@@ -1,4 +1,6 @@
-﻿namespace PickemWPFUI.Library.Models
+﻿using System.Collections.Generic;
+
+namespace PickemWPFUI.Library.Models
 {
     public interface ILoggedInUserModel
     {
@@ -10,5 +12,6 @@
         string PhoneNumber { get; set; }
         int Rank { get; set; }
         int Wins { get; set; }
+        List<UserPick> PickSet { get; set; }
     }
 }
