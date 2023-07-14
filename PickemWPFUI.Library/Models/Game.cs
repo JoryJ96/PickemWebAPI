@@ -10,5 +10,20 @@
         public double AwaySpread { get; set; }
         public string TimeSlot { get; set; }
 
+        public string DisplayHome { 
+            get
+            {
+                return $"{Home} {HomeSpread}";
+            }
+        }
+
+        public string DisplayAway
+        {
+            get
+            {
+                return $"{Away} {AwaySpread}";
+            }
+        }
+
     }
 }

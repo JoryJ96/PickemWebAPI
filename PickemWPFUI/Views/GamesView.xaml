@@ -36,8 +36,8 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <Button Content="{Binding Home}" Margin="5" cal:Message.Attach="[Event Click] = [Action HomeButtonClicked($dataContext)]" />
-                        <Button Content="{Binding Away}" Margin="5" cal:Message.Attach="[Event Click] = [Action HomeButtonClicked($dataContext)]" />
+                        <Button Content="{Binding DisplayHome}" Margin="5" cal:Message.Attach="[Event Click] = [Action HomeButtonClicked($dataContext)]" />
+                        <Button Content="{Binding DisplayAway}" Margin="5" cal:Message.Attach="[Event Click] = [Action HomeButtonClicked($dataContext)]" />
                     </StackPanel>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
