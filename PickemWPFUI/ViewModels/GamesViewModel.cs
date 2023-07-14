@@ -100,7 +100,7 @@ namespace PickemWPFUI.ViewModels
             {
                 game.IsHomeClicked = false;
 
-                PickSet.Remove(pick);
+                Remove(game);
                 NotifyOfPropertyChange(() => PickSet);
             } else
             {
@@ -125,7 +125,7 @@ namespace PickemWPFUI.ViewModels
             {
                 game.IsAwayClicked = false;
 
-                PickSet.Remove(pick);
+                Remove(game);
                 NotifyOfPropertyChange(() => PickSet);
             }
             else
@@ -134,6 +134,18 @@ namespace PickemWPFUI.ViewModels
 
                 PickSet.Add(pick);
                 NotifyOfPropertyChange(() => PickSet);
+            }
+        }
+
+        private void Remove(Game game)
+        {
+            foreach (UserPick gameToRemove in PickSet)
+            {
+                if (gameToRemove.GameID == game.gameId)
+                {
+                    PickSet.Remove(gameToRemove);
+                    break;
+                }
             }
         }
 
