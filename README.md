@@ -4,8 +4,9 @@ Current solution contains both the DB/API projects (PickemDB, PickemWebAPI, and 
 
 The way the project is currently setup, a user (once an account can be created) logs in and is immediately granted an API token. This is required to make calls to the API/DB.
 
-Currently WIP is the Games page, which the user is taken to after logging in. It is simply a list of buttons side by side, Home team on the left and Away team on the right. The spread will be displayed underneath the team names.
-WIP is to setup the bindings for the buttons stackPanel text contents, which will read from a Games table in the DB to auto-populate. The games table will be filled out manually.
+Games page successfully loads after login, grabbing data from the API to populate a list of buttons. Home team is on the left, away team is on the right. The buttons contain {teamName} and {teamSpread}.
+
+WIP is capturing button clicks and processing those clicks into a workable pickSet.
 
 Some limits to selecting games include not allowing both teams in a single game to be selected (If a user tries to select the second team, their pick will simply be changed to that team, and the original will be un-selected);
 The submit button will not be available until one MNF game is selected, one SNF game is selected, the DAL game is selected (if not on SNF/MNF), and the other optionals are selected
