@@ -6,6 +6,7 @@ namespace PickemWPFUI.Library.Models
     {
         private bool _isHomeClicked;
         private bool _isAwayClicked;
+        private bool _isButtonClickable;
 
         public string gameId { get; set; }
         public int Week { get; set; }

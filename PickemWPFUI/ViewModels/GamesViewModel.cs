@@ -1,6 +1,7 @@
 ﻿using Caliburn.Micro;
 using PickemWPFUI.Helpers;
 using PickemWPFUI.Library.Api;
+using PickemWPFUI.Library.Helpers;
 using PickemWPFUI.Library.Models;
 using PickemWPFUI.Models;
 using System;
@@ -19,15 +20,22 @@ namespace PickemWPFUI.ViewModels
 {
     public class GamesViewModel : Screen
     {
+        private int _selectionCounter;
+        private bool CanSelectGame => SelectionCounter < 5;
+        private bool DalOnPrimeTime = false;
+
         private IGameEndpoint _gameEndpoint;
         private ILoggedInUserModel _loggedInUser;
+        private IPickSetEndpoint _pickSetEndpoint;
 
         private ObservableCollection<UserPick> _pickSet = new ObservableCollection<UserPick>();
+        private PickSetModel _verifiedPickSet = new PickSetModel();
 
-        public GamesViewModel(IGameEndpoint gameEndpoint, ILoggedInUserModel loggedInUser)
+        public GamesViewModel(IGameEndpoint gameEndpoint, ILoggedInUserModel loggedInUser, IPickSetEndpoint pickSetEndpoint)
         {
             _gameEndpoint = gameEndpoint;
             _loggedInUser = loggedInUser;
+            _pickSetEndpoint = pickSetEndpoint;
         }
 
         private async Task LoadGames()
@@ -36,6 +44,11 @@ namespace PickemWPFUI.ViewModels
 
             foreach (Game game in Games)
             {
+                if ((game.Home.Contains("DAL") || game.Away.Contains("DAL")) && (game.TimeSlot == "MNF" || game.TimeSlot == "SNF"))
+                {
+                    DalOnPrimeTime = true;
+                }
+
                 GamesDTO.Add(game);
             }
         }
@@ -56,6 +69,7 @@ namespace PickemWPFUI.ViewModels
 
         private List<Game> _games;
 
+        // List that is used to populate each button
         public List<Game> Games
         {
             get { return _games; }
@@ -67,6 +81,7 @@ namespace PickemWPFUI.ViewModels
 
         private ObservableCollection<Game> _gamesDTO = new ObservableCollection<Game>();
 
+        // Buttons / Games
         public ObservableCollection<Game> GamesDTO
         {
             get { return _gamesDTO; }
@@ -76,6 +91,7 @@ namespace PickemWPFUI.ViewModels
             }
         }
 
+        // Users selections
         public ObservableCollection<UserPick> PickSet
         {
             get { return _pickSet; }
@@ -85,6 +101,26 @@ namespace PickemWPFUI.ViewModels
             }
         }
 
+        // For verification purposes. Not displayed on front end, but what gets shipped to API
+        public PickSetModel VerifiedPickSet
+        {
+            get { return _verifiedPickSet; }
+            set { _verifiedPickSet = value; }
+        }
+
+        public int SelectionCounter
+        {
+            get
+            {
+                return _selectionCounter;
+            }
+            set
+            {
+                _selectionCounter = value;
+                NotifyOfPropertyChange(() => SelectionCounter);
+                NotifyOfPropertyChange(() => CanSelectGame);
+            }
+        }
 
         public void HomeButtonClicked(Game game)
         {
@@ -93,21 +129,32 @@ namespace PickemWPFUI.ViewModels
                 GameID = game.gameId,
                 Team = game.Home,
                 Spread = game.HomeSpread,
-                TimeSlot = game.TimeSlot
+                TimeSlot = game.TimeSlot,
+                OppTeam = game.Away
             };
 
             if (game.IsHomeClicked)
             {
-                game.IsHomeClicked = false;
-
-                Remove(game);
-                NotifyOfPropertyChange(() => PickSet);
+                if (ProcessSelection(pick, "remove"))
+                {
+                    game.IsHomeClicked = false;
+                    Remove(game);
+                    SelectionCounter--;
+                }
             } else
             {
-                game.IsHomeClicked = true;
-
-                PickSet.Add(pick);
-                NotifyOfPropertyChange(() => PickSet);
+                if (CanSelectGame)
+                {
+                    if (ProcessSelection(pick, "add"))
+                    {
+                        game.IsHomeClicked = true;
+                        SelectionCounter++;
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Could not add pick because there was no slot available for {pick.TimeSlot}");
+                    }
+                }
             }
         }
 
@@ -118,40 +165,145 @@ namespace PickemWPFUI.ViewModels
                 GameID = game.gameId,
                 Team = game.Away,
                 Spread = game.AwaySpread,
-                TimeSlot = game.TimeSlot
+                TimeSlot = game.TimeSlot,
+                OppTeam = game.Home
             };
 
             if (game.IsAwayClicked)
             {
                 game.IsAwayClicked = false;
-
                 Remove(game);
-                NotifyOfPropertyChange(() => PickSet);
+                ProcessSelection(pick, "remove");
+                SelectionCounter--;
             }
             else
             {
-                game.IsAwayClicked = true;
-
-                PickSet.Add(pick);
-                NotifyOfPropertyChange(() => PickSet);
+                if (CanSelectGame)
+                {
+                    if (ProcessSelection(pick, "add"))
+                    {
+                        game.IsAwayClicked = true;
+                        SelectionCounter++;
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Could not add pick because there was no slot available for {pick.TimeSlot}");
+                    }
+                }
             }
         }
 
         private void Remove(Game game)
         {
+            // Remove from pickset
             foreach (UserPick gameToRemove in PickSet)
             {
                 if (gameToRemove.GameID == game.gameId)
                 {
                     PickSet.Remove(gameToRemove);
+                    NotifyOfPropertyChange(() => PickSet);
                     break;
                 }
             }
         }
 
-        public void SubmitPicks(object sender, EventArgs e)
+        public async Task SubmitPicks()
         {
-            // However we stored the pick set, fire that off to the API
+            await _pickSetEndpoint.PostPickSet(VerifiedPickSet);
+        }
+
+        // Only handles VerifiedPickSet manipulation
+        public bool ProcessSelection(UserPick pick, string command)
+        {
+            // If dallas is on primetime, dont even worry about SUN selection filtering, otherwise only the game with .Home or .Away == "DAL" can be placed in the DalOrOptSelection slot.
+            // If thats empty because the user failed to select a team from the DAL game, they wont be able to submit picks anyway
+            switch (pick.TimeSlot)
+            {
+                case "MNF":
+                    if (command == "add")
+                    {
+                        VerifiedPickSet.MNFSelection = pick.Team;
+                        PickSet.Add(pick);
+                        NotifyOfPropertyChange(() => PickSet);
+                    } else
+                    {
+                        VerifiedPickSet.MNFSelection = null;
+                    }
+                    // Add exception handling here even though it wont ever hit
+                    return true;
+                case "SNF":
+                    if (command == "add")
+                    {
+                        VerifiedPickSet.SNFSelection = pick.Team;
+                        PickSet.Add(pick);
+                        NotifyOfPropertyChange(() => PickSet);
+                    } else
+                    {
+                        VerifiedPickSet.SNFSelection = null;
+                    }
+                    return true;
+                case "OPT":
+                    if (command == "add")
+                    {
+                        if (pick.Team.Contains("DAL") || pick.OppTeam.Contains("DAL"))
+                        {
+                            VerifiedPickSet.DalOrOptSelection = pick.Team;
+                            return true;
+                        }
+
+                        if (DalOnPrimeTime && VerifiedPickSet.DalOrOptSelection == null)
+                        {
+                            VerifiedPickSet.DalOrOptSelection = pick.Team;
+                            PickSet.Add(pick);
+                            NotifyOfPropertyChange(() => PickSet);
+                            return true;
+                        } else if (VerifiedPickSet.FirstOptionalSelection == null)
+                        {
+                            VerifiedPickSet.FirstOptionalSelection = pick.Team;
+                            PickSet.Add(pick);
+                            NotifyOfPropertyChange(() => PickSet);
+                            return true;
+                        } else if (VerifiedPickSet.SecondOptionalSelection == null)
+                        {
+                            VerifiedPickSet.SecondOptionalSelection = pick.Team;
+                            PickSet.Add(pick);
+                            NotifyOfPropertyChange(() => PickSet);
+                            return true;
+                        } else { return false; }
+                    } else
+                    {
+                        if (pick.TimeSlot == "MNF")
+                        {
+                            VerifiedPickSet.MNFSelection = null;
+                            return true;
+                        } else if (pick.TimeSlot == "SNF")
+                        {
+                            VerifiedPickSet.SNFSelection = null;
+                            return true;
+                        } else if (pick.TimeSlot == "OPT")
+                        {
+                            if (VerifiedPickSet.DalOrOptSelection != null && VerifiedPickSet.DalOrOptSelection.Contains(pick.Team))
+                            {
+                                VerifiedPickSet.DalOrOptSelection = null;
+                                return true;
+                            } else if (VerifiedPickSet.FirstOptionalSelection != null && VerifiedPickSet.FirstOptionalSelection.Contains(pick.Team))
+                            {
+                                VerifiedPickSet.FirstOptionalSelection = null;
+                                return true;
+                            } else if (VerifiedPickSet.SecondOptionalSelection != null && VerifiedPickSet.SecondOptionalSelection.Contains(pick.Team))
+                            {
+                                VerifiedPickSet.SecondOptionalSelection = null;
+                                return true;
+                            } else { return false; }
+                        } else
+                        {
+                            return false;
+                        }
+                    }
+            }
+
+            // Wont reach this, but it gets the error to shut up?
+            return false;
         }
     }
 }

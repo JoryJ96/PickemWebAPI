@@ -30,7 +30,8 @@ namespace PickemWPFUI
         protected override void Configure()
         {
             _container.Instance(_container)
-                .PerRequest<IGameEndpoint, GameEndpoint>();
+                .PerRequest<IGameEndpoint, GameEndpoint>()
+                .PerRequest<IPickSetEndpoint, PickSetEndpoint>();
 
             _container
                 .Singleton<IWindowManager, WindowManager>()

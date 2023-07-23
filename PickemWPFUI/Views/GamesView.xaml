@@ -46,6 +46,9 @@
                                         <DataTrigger Binding="{Binding IsAwayClicked}" Value="true">
                                             <Setter Property="IsEnabled" Value="False" />
                                         </DataTrigger>
+                                        <DataTrigger Binding="{Binding CanSelectGame}" Value="False">
+                                            <Setter Property="IsEnabled" Value="False" />
+                                        </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </Button.Style>
@@ -60,6 +63,9 @@
                                         <DataTrigger Binding="{Binding IsHomeClicked}" Value="true">
                                             <Setter Property="IsEnabled" Value="False" />
                                         </DataTrigger>
+                                        <DataTrigger Binding="{Binding CanSelectGame}" Value="False">
+                                            <Setter Property="IsEnabled" Value="False" />
+                                        </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </Button.Style>
@@ -70,7 +76,7 @@
         </ItemsControl>
         
         <!-- Current pick set -->
-        <ListBox ItemsSource="{Binding PickSet}" Grid.Row="1" Grid.Column="3">
+        <ListBox ItemsSource="{Binding PickSet}" Grid.Row="1" Grid.Column="3" BorderThickness="0">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Team}" Margin="5">
@@ -87,7 +93,7 @@
         <!-- Submit button -->
         <Border  Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"
                  BorderBrush="Black" BorderThickness="0 1 0 0" Margin="0 10 0 10" Padding="5">
-            <Button Padding="5" Margin="5" Content="Submit Picks"/>
+            <Button Padding="5" Margin="5" Content="Submit Picks" cal:Message.Attach="[Event Click] = [Action SubmitPicks()]"/>
         </Border>
     </Grid>
 </UserControl>

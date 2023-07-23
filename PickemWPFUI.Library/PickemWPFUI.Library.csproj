@@ -47,10 +47,14 @@
     <Compile Include="Api\GameEndpoint.cs" />
     <Compile Include="Api\IAPIHelper.cs" />
     <Compile Include="Api\IGameEndpoint.cs" />
+    <Compile Include="Api\IPickSetEndpoint.cs" />
+    <Compile Include="Api\PickSetEndpoint.cs" />
+    <Compile Include="Helpers\Verification.cs" />
     <Compile Include="Models\AuthenticatedUser.cs" />
     <Compile Include="Models\Game.cs" />
     <Compile Include="Models\ILoggedInUserModel.cs" />
     <Compile Include="Models\LoggedInUserModel.cs" />
+    <Compile Include="Models\PickSetModel.cs" />
     <Compile Include="Models\UserPick.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

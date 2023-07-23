@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataAccess\GameData.cs" />
+    <Compile Include="DataAccess\PickSetData.cs" />
     <Compile Include="DataAccess\UserData.cs" />
     <Compile Include="Models\GameModel.cs" />
     <Compile Include="Models\UserModel.cs" />
