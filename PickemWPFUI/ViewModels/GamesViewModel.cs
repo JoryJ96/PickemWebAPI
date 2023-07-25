@@ -21,8 +21,7 @@ namespace PickemWPFUI.ViewModels
     public class GamesViewModel : Screen
     {
         private int _selectionCounter;
-        private bool CanSelectGame => SelectionCounter < 5;
-        private bool DalOnPrimeTime = false;
+        private bool CanSelectGame => SelectionCounter < 7;
 
         private IGameEndpoint _gameEndpoint;
         private ILoggedInUserModel _loggedInUser;
@@ -44,11 +43,6 @@ namespace PickemWPFUI.ViewModels
 
             foreach (Game game in Games)
             {
-                if ((game.Home.Contains("DAL") || game.Away.Contains("DAL")) && (game.TimeSlot == "MNF" || game.TimeSlot == "SNF"))
-                {
-                    DalOnPrimeTime = true;
-                }
-
                 GamesDTO.Add(game);
             }
         }
@@ -245,27 +239,36 @@ namespace PickemWPFUI.ViewModels
                 case "OPT":
                     if (command == "add")
                     {
-                        if (pick.Team.Contains("DAL") || pick.OppTeam.Contains("DAL"))
-                        {
-                            VerifiedPickSet.DalOrOptSelection = pick.Team;
-                            return true;
-                        }
-
-                        if (DalOnPrimeTime && VerifiedPickSet.DalOrOptSelection == null)
-                        {
-                            VerifiedPickSet.DalOrOptSelection = pick.Team;
-                            PickSet.Add(pick);
-                            NotifyOfPropertyChange(() => PickSet);
-                            return true;
-                        } else if (VerifiedPickSet.FirstOptionalSelection == null)
+                        if (VerifiedPickSet.FirstOptionalSelection == null)
                         {
                             VerifiedPickSet.FirstOptionalSelection = pick.Team;
                             PickSet.Add(pick);
                             NotifyOfPropertyChange(() => PickSet);
                             return true;
-                        } else if (VerifiedPickSet.SecondOptionalSelection == null)
+                        }
+                        else if (VerifiedPickSet.SecondOptionalSelection == null)
                         {
                             VerifiedPickSet.SecondOptionalSelection = pick.Team;
+                            PickSet.Add(pick);
+                            NotifyOfPropertyChange(() => PickSet);
+                            return true;
+                        } else if (VerifiedPickSet.ThirdOptionalSelection == null)
+                        {
+                            VerifiedPickSet.ThirdOptionalSelection = pick.Team;
+                            PickSet.Add(pick);
+                            NotifyOfPropertyChange(() => PickSet);
+                            return true;
+                        }
+                        else if (VerifiedPickSet.FourthOptionalSelection == null)
+                        {
+                            VerifiedPickSet.FourthOptionalSelection = pick.Team;
+                            PickSet.Add(pick);
+                            NotifyOfPropertyChange(() => PickSet);
+                            return true;
+                        }
+                        else if (VerifiedPickSet.FifthOptionalSelection == null)
+                        {
+                            VerifiedPickSet.FifthOptionalSelection = pick.Team;
                             PickSet.Add(pick);
                             NotifyOfPropertyChange(() => PickSet);
                             return true;
@@ -282,11 +285,7 @@ namespace PickemWPFUI.ViewModels
                             return true;
                         } else if (pick.TimeSlot == "OPT")
                         {
-                            if (VerifiedPickSet.DalOrOptSelection != null && VerifiedPickSet.DalOrOptSelection.Contains(pick.Team))
-                            {
-                                VerifiedPickSet.DalOrOptSelection = null;
-                                return true;
-                            } else if (VerifiedPickSet.FirstOptionalSelection != null && VerifiedPickSet.FirstOptionalSelection.Contains(pick.Team))
+                            if (VerifiedPickSet.FirstOptionalSelection != null && VerifiedPickSet.FirstOptionalSelection.Contains(pick.Team))
                             {
                                 VerifiedPickSet.FirstOptionalSelection = null;
                                 return true;
@@ -294,7 +293,23 @@ namespace PickemWPFUI.ViewModels
                             {
                                 VerifiedPickSet.SecondOptionalSelection = null;
                                 return true;
-                            } else { return false; }
+                            }
+                            else if (VerifiedPickSet.ThirdOptionalSelection != null && VerifiedPickSet.ThirdOptionalSelection.Contains(pick.Team))
+                            {
+                                VerifiedPickSet.ThirdOptionalSelection = null;
+                                return true;
+                            }
+                            else if (VerifiedPickSet.FourthOptionalSelection != null && VerifiedPickSet.FourthOptionalSelection.Contains(pick.Team))
+                            {
+                                VerifiedPickSet.FourthOptionalSelection = null;
+                                return true;
+                            }
+                            else if (VerifiedPickSet.FifthOptionalSelection != null && VerifiedPickSet.FifthOptionalSelection.Contains(pick.Team))
+                            {
+                                VerifiedPickSet.FifthOptionalSelection = null;
+                                return true;
+                            }
+                            else { return false; }
                         } else
                         {
                             return false;

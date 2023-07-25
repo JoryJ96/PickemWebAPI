@@ -28,4 +28,18 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="AwaySpread" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="61269811-3c79-47b7-8537-b48dcd60ebf1" ChangeDateTime="07/25/2023 02:05:49">
+    <Property Name="ElementName" Value="[dbo].[PickSets].[DalOrOptSelection]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[PickSets]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="FirstOptionalSelection" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="29a59e8d-88f7-4586-8528-8a4501b28605" ChangeDateTime="07/25/2023 02:06:09">
+    <Property Name="ElementName" Value="[dbo].[PickSets].[TripleOption]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[PickSets]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="FourthOptionalSelection" />
+  </Operation>
 </Operations>
