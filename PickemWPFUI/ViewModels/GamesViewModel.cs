@@ -203,14 +203,15 @@ namespace PickemWPFUI.ViewModels
 
         public async Task SubmitPicks()
         {
+            string userID = _loggedInUser.Id;
+
+            VerifiedPickSet.UserID = userID;
             await _pickSetEndpoint.PostPickSet(VerifiedPickSet);
         }
 
         // Only handles VerifiedPickSet manipulation
         public bool ProcessSelection(UserPick pick, string command)
         {
-            // If dallas is on primetime, dont even worry about SUN selection filtering, otherwise only the game with .Home or .Away == "DAL" can be placed in the DalOrOptSelection slot.
-            // If thats empty because the user failed to select a team from the DAL game, they wont be able to submit picks anyway
             switch (pick.TimeSlot)
             {
                 case "MNF":

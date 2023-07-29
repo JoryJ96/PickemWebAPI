@@ -49,6 +49,8 @@
     <Compile Include="DataAccess\PickSetData.cs" />
     <Compile Include="DataAccess\UserData.cs" />
     <Compile Include="Models\GameModel.cs" />
+    <Compile Include="Models\PickSetDBModel.cs" />
+    <Compile Include="Models\PickSetModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Internal\DataAccess\SqlDataAccess.cs" />

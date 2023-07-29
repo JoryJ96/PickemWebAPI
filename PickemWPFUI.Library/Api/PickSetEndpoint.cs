@@ -22,7 +22,10 @@ namespace PickemWPFUI.Library.Api
         {
             using (HttpResponseMessage response = await _apiHelper.ApiClient.PostAsJsonAsync("/api/PickSet", set))
             {
-                if (response.IsSuccessStatusCode) { return; }
+                if (response.IsSuccessStatusCode) {
+                    Console.WriteLine("PickSet Endpoint fired successfully");
+                    return; 
+                }
                 else
                 {
                     throw new Exception(response.ReasonPhrase);

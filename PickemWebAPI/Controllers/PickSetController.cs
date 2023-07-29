@@ -1,4 +1,6 @@
-﻿using PickemWebAPI.Models;
+﻿using PickemWebAPI.Library.DataAccess;
+using PickemWebAPI.Library.Models;
+using PickemWebAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +14,11 @@ namespace PickemWebAPI.Controllers
     public class PickSetController : ApiController
     {
         [Authorize]
-        public async Task Post(PickSetAPIModel model)
+        public void Post(PickSetModel model)
         {
-            Console.WriteLine();
+            PickSetData data = new PickSetData();
+
+            data.SaveData(model);
         }
     }
 }

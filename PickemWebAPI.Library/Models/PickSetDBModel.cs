@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace PickemWebAPI.Models
+namespace PickemWebAPI.Library.Models
 {
-    public class PickSetAPIModel
+    public class PickSetDBModel
     {
         public string UserID { get; set; }
+        public int Week { get; set; }
         public string MNFSelection { get; set; }
         public string SNFSelection { get; set; }
         public string FirstOptionalSelection { get; set; }

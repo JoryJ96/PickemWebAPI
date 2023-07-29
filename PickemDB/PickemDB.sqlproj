@@ -72,6 +72,7 @@
     <Build Include="dbo\Stored Procedures\spUserLookup.sql" />
     <Build Include="dbo\Stored Procedures\spGame_GetAll.sql" />
     <Build Include="dbo\Tables\PickSets.sql" />
+    <Build Include="dbo\Stored Procedures\spPickSet_Insert.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="PickemDB.refactorlog" />
