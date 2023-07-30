@@ -8,6 +8,7 @@ namespace PickemWebAPI.Models
     public class PickSetAPIModel
     {
         public string UserID { get; set; }
+        public string Username { get; set; }
         public string MNFSelection { get; set; }
         public string SNFSelection { get; set; }
         public string FirstOptionalSelection { get; set; }

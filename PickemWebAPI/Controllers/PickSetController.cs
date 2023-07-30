@@ -13,7 +13,7 @@ namespace PickemWebAPI.Controllers
 {
     public class PickSetController : ApiController
     {
-        [Authorize]
+        [Authorize(Roles = "Basic, Admin")]
         public void Post(PickSetModel model)
         {
             PickSetData data = new PickSetData();

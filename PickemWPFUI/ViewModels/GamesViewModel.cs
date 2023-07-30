@@ -204,8 +204,10 @@ namespace PickemWPFUI.ViewModels
         public async Task SubmitPicks()
         {
             string userID = _loggedInUser.Id;
+            string userName = _loggedInUser.Name;
 
             VerifiedPickSet.UserID = userID;
+            VerifiedPickSet.Username = userName;
             await _pickSetEndpoint.PostPickSet(VerifiedPickSet);
         }
 

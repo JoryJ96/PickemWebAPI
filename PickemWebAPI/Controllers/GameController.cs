@@ -5,6 +5,7 @@ using System.Web.Http;
 
 namespace PickemWebAPI.Controllers
 {
+    [Authorize(Roles = "Basic, Admin")]
     public class GameController : ApiController
     {
         public List<GameModel> Get()

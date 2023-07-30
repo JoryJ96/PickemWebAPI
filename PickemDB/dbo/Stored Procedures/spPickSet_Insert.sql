@@ -7,9 +7,10 @@
 	@ThirdOptionalSelection nvarchar(50),
 	@FourthOptionalSelection nvarchar(50),
 	@FifthOptionalSelection nvarchar(50),
-	@TripleOption nvarchar(50)
+	@TripleOption nvarchar(50),
+	@Username nvarchar(50)
 AS
 	BEGIN
-	INSERT INTO dbo.PickSets(UserID, MNFSelection, SNFSelection, FirstOptionalSelection, SecondOptionalSelection, ThirdOptionalSelection, FourthOptionalSelection, FifthOptionalSelection, TripleOption)
-	VALUES (@UserID, @MNFSelection, @SNFSelection, @FirstOptionalSelection, @SecondOptionalSelection, @ThirdOptionalSelection, @FourthOptionalSelection, @FifthOptionalSelection, @TripleOption);
+	INSERT INTO dbo.PickSets(UserID, MNFSelection, SNFSelection, FirstOptionalSelection, SecondOptionalSelection, ThirdOptionalSelection, FourthOptionalSelection, FifthOptionalSelection, TripleOption, Username)
+	VALUES (@UserID, @MNFSelection, @SNFSelection, @FirstOptionalSelection, @SecondOptionalSelection, @ThirdOptionalSelection, @FourthOptionalSelection, @FifthOptionalSelection, @TripleOption, @Username);
 END

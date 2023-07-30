@@ -11,5 +11,6 @@
     [FifthOptionalSelection] NVARCHAR(50) NOT NULL, 
     [TripleOption] NVARCHAR(50) NULL, 
     [Week] INT NULL, 
+    [Username] NVARCHAR(50) NOT NULL, 
     CONSTRAINT [FK_PickSets_Users] FOREIGN KEY (UserID) REFERENCES Users(ID)
 )

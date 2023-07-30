@@ -10,7 +10,7 @@ using System.Web.Http;
 
 namespace PickemWebAPI.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Basic, Admin")]
     public class UserController : ApiController
     {
         public UserModel GetById()
