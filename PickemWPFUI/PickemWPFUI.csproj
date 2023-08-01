@@ -84,6 +84,7 @@
     <Compile Include="ViewModels\GamesViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
+    <Compile Include="ViewModels\StatusInfoViewModel.cs" />
     <Compile Include="Views\GamesView.xaml.cs">
       <DependentUpon>GamesView.xaml</DependentUpon>
     </Compile>

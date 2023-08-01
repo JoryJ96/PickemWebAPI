@@ -9,6 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Dynamic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -26,15 +27,19 @@ namespace PickemWPFUI.ViewModels
         private IGameEndpoint _gameEndpoint;
         private ILoggedInUserModel _loggedInUser;
         private IPickSetEndpoint _pickSetEndpoint;
+        private IWindowManager _window;
 
         private ObservableCollection<UserPick> _pickSet = new ObservableCollection<UserPick>();
         private PickSetModel _verifiedPickSet = new PickSetModel();
+        private StatusInfoViewModel _status;
 
-        public GamesViewModel(IGameEndpoint gameEndpoint, ILoggedInUserModel loggedInUser, IPickSetEndpoint pickSetEndpoint)
+        public GamesViewModel(IGameEndpoint gameEndpoint, ILoggedInUserModel loggedInUser, IPickSetEndpoint pickSetEndpoint, StatusInfoViewModel status, IWindowManager windowManager)
         {
             _gameEndpoint = gameEndpoint;
             _loggedInUser = loggedInUser;
             _pickSetEndpoint = pickSetEndpoint;
+            _status = status;
+            _window = windowManager;
         }
 
         private async Task LoadGames()
@@ -181,7 +186,13 @@ namespace PickemWPFUI.ViewModels
                     }
                     else
                     {
-                        MessageBox.Show($"Could not add pick because there was no slot available for {pick.TimeSlot}");
+                        dynamic selectionSettings = new ExpandoObject();
+                        selectionSettings.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                        selectionSettings.ResizeMode = ResizeMode.NoResize;
+                        selectionSettings.Title = "Selection Error";
+
+                        _status.UpdateMessage("Selection Denied", $"No available slots for time slot {game.TimeSlot}");
+                        _window.ShowDialog(_status, null, null);
                     }
                 }
             }
