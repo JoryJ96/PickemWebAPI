@@ -151,7 +151,13 @@ namespace PickemWPFUI.ViewModels
                     }
                     else
                     {
-                        MessageBox.Show($"Could not add pick because there was no slot available for {pick.TimeSlot}");
+                        dynamic selectionSettings = new ExpandoObject();
+                        selectionSettings.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                        selectionSettings.ResizeMode = ResizeMode.NoResize;
+                        selectionSettings.Title = "Selection Error";
+
+                        _status.UpdateMessage("Selection Denied", $"No available slots for time slot {game.TimeSlot}");
+                        _window.ShowDialog(_status, null, selectionSettings);
                     }
                 }
             }
@@ -192,7 +198,7 @@ namespace PickemWPFUI.ViewModels
                         selectionSettings.Title = "Selection Error";
 
                         _status.UpdateMessage("Selection Denied", $"No available slots for time slot {game.TimeSlot}");
-                        _window.ShowDialog(_status, null, null);
+                        _window.ShowDialog(_status, null, selectionSettings);
                     }
                 }
             }
