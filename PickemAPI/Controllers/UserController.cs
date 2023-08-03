@@ -9,7 +9,6 @@ namespace PickemAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Basic, Admin")]
     public class UserController : ControllerBase
     {
         private readonly IConfiguration _config;

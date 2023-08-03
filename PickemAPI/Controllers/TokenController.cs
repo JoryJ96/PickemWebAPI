@@ -10,9 +10,9 @@ using System.Text;
 
 namespace PickemAPI.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class TokenController : ControllerBase
+    //[Route("api/[controller]")]
+    //[ApiController]
+    public class TokenController : Controller
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
@@ -23,7 +23,7 @@ namespace PickemAPI.Controllers
             _userManager = userManager;
         }
 
-        //[Route("/Token")]
+        [Route("/Token")]
         [HttpPost]
         public async Task<IActionResult> Create(string username, string password, string grant_type)
         {
@@ -56,7 +56,7 @@ namespace PickemAPI.Controllers
 
             var token = new JwtSecurityToken(
                 new JwtHeader(new SigningCredentials(
-                    new SymmetricSecurityKey(Encoding.UTF8.GetBytes("SuperSecretSecurityStuff")),
+                    new SymmetricSecurityKey(Encoding.UTF8.GetBytes("SuperSecretSecurityStuffDoNotGiveThisAway")),
                                              SecurityAlgorithms.HmacSha256)),
                 new JwtPayload(claims));
 

@@ -26,12 +26,12 @@ namespace PickemWPFUI.Helpers
 
         private void InitializeClient()
         {
-            string conn = ConfigurationManager.AppSettings["connectionString"];
+            //string conn = ConfigurationManager.AppSettings["connectionString"];
 
             _apiClient = new HttpClient();
-            _apiClient.BaseAddress = new Uri(conn);
+            _apiClient.BaseAddress = new Uri("https://localhost:7044/");
             _apiClient.DefaultRequestHeaders.Accept.Clear();
-            _apiClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/x-www-form-urlencoded"));
+            _apiClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
         public async Task<AuthenticatedUser> Authenticate(string username, string password)
@@ -43,7 +43,7 @@ namespace PickemWPFUI.Helpers
                 new KeyValuePair<string, string>("password", password)
             });
 
-            using (HttpResponseMessage response = await _apiClient.PostAsync("api/Token", data))
+            using (HttpResponseMessage response = await _apiClient.PostAsync("/Token", data))
             {
                 if (response.IsSuccessStatusCode)
                 {

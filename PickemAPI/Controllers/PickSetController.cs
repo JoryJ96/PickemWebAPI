@@ -8,7 +8,6 @@ namespace PickemAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class PickSetController : ControllerBase
     {
         private readonly IConfiguration _config;
@@ -18,7 +17,6 @@ namespace PickemAPI.Controllers
             _config = config;
         }
 
-        [Authorize(Roles = "Basic, Admin")]
         public void Post(PickSetModel model)
         {
             PickSetData data = new PickSetData(_config);

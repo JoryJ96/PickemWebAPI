@@ -100,7 +100,7 @@ namespace PickemWPFUI.ViewModels
 				var result = await _apiHelper.Authenticate(Username, Password);
 				ErrorMessage = "";
 
-				await _apiHelper.GetLoggedInUserInfo(result.Access_token);
+				await _apiHelper.GetLoggedInUserInfo(result.Access_Token);
 
 				_events.PublishOnUIThread(new LogOnEvent());
 			}
