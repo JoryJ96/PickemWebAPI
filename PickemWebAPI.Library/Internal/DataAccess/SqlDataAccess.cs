@@ -1,5 +1,5 @@
 ﻿using Dapper;
-using MongoDB.Driver;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -9,11 +9,18 @@ using System.Linq;
 
 namespace PickemWebAPI.Library.Internal.DataAccess
 {
-    public class SqlDataAccess
+    internal class SqlDataAccess
     {
+        private IConfiguration _config;
+
+        public SqlDataAccess(IConfiguration config)
+        {
+            _config = config;
+        }
+
         public string GetConnectionString(string csName)
         {
-            return ConfigurationManager.ConnectionStrings[csName].ConnectionString;
+            return _config.GetConnectionString(csName);
         }
 
         public List<T> LoadData<T, U>(string storedProcedure, U parameters, string connectionStringName)
