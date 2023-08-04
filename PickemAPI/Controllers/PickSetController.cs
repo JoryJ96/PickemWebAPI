@@ -17,6 +17,7 @@ namespace PickemAPI.Controllers
             _config = config;
         }
 
+        [HttpPost]
         public void Post(PickSetModel model)
         {
             PickSetData data = new PickSetData(_config);

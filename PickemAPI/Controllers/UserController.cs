@@ -18,12 +18,13 @@ namespace PickemAPI.Controllers
             _config = config;
         }
 
+        [HttpGet]
         public UserModel GetById()
         {
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             UserData data = new UserData(_config);
 
-            return data.GetUserById(userId).FirstOrDefault();
+            return data.GetUserById(userId).First();
         }
     }
 }

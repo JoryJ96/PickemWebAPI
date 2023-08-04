@@ -16,6 +16,8 @@ namespace PickemAPI.Controllers
         {
             _config = config;
         }
+
+        [HttpGet]
         public List<GameModel> Get()
         {
             GameData data = new GameData(_config);

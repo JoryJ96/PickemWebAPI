@@ -64,7 +64,7 @@ namespace PickemWPFUI.Helpers
             _apiClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             _apiClient.DefaultRequestHeaders.Add("Authorization", $"bearer { token }");
 
-            using (HttpResponseMessage response = await _apiClient.GetAsync("/api/User"))
+            using (HttpResponseMessage response = await _apiClient.GetAsync("/User"))
             {
                 if ( response.IsSuccessStatusCode )
                 {

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using PickemAPI.Data;
 using System.Text;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +33,18 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+builder.Services.AddSwaggerGen(setup =>
+{
+    setup.SwaggerDoc(
+        "v1",
+        new OpenApiInfo
+        {
+            Title = "PickemAPI",
+            Version = "v1"
+        });
+}
+);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -53,6 +66,12 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "PickemAPI v1");
+});
 
 app.MapControllerRoute(
     name: "default",
